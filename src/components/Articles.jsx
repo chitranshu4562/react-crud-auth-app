@@ -34,6 +34,16 @@ export default function Articles() {
     })
   }
 
+  const editArticle = (values) => {
+      setArticles((prevState) => {
+          const arr = [...prevState];
+          const index = arr.findIndex((article) => article.id === articleToEdit.id);
+          arr[index].title = values.title;
+          arr[index].description = values.description;
+          return arr;
+      })
+  }
+
   const deleteArticleById = (articleId) => {
       setArticles((prevState) => {
           return prevState.filter((article) => article.id !== articleId)
@@ -51,7 +61,7 @@ export default function Articles() {
         {articleToEdit ? <ArticleForm
             titleValue={articleToEdit.title}
             descriptionValue={articleToEdit.description}
-            onSubmit={receiveValuesFromArticleForm}/> : <ArticleForm onSubmit={receiveValuesFromArticleForm}/>}
+            onSubmit={editArticle}/> : <ArticleForm onSubmit={receiveValuesFromArticleForm}/>}
       <div className={classes.articleContainer}>
           {articles.map((article) => (
               <Article key={article.id}
