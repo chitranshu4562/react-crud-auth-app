@@ -1,0 +1,7 @@
+.formContainer {
+    width: 70%;
+    background-color: cyan;
+    padding: 10px;
+    margin: 10px auto;
+    border-radius: 12px;
+}
