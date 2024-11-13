@@ -5,6 +5,7 @@ import ArticleForm from "./article-form/ArticleForm";
 import { generateUniqueId } from "../utils";
 
 export default function Articles() {
+    const [articleToEdit, setArticleToEdit] = useState(null);
   const [articles, setArticles] = useState([
     {
       id: 1731431079374,
@@ -17,6 +18,7 @@ export default function Articles() {
       description: "Second description",
     }
   ]);
+
 
   const receiveValuesFromArticleForm = (values) => {
     console.log('Values in parent component: ', values);
@@ -38,9 +40,18 @@ export default function Articles() {
       })
   }
 
+  const handleEditArticle = (articleId) => {
+      const obj = articles.find((article) => article.id === articleId)
+      console.log(obj);
+      setArticleToEdit(obj);
+  }
+
   return (
     <>
-      <ArticleForm onSubmit={receiveValuesFromArticleForm}/>
+        {articleToEdit ? <ArticleForm
+            titleValue={articleToEdit.title}
+            descriptionValue={articleToEdit.description}
+            onSubmit={receiveValuesFromArticleForm}/> : <ArticleForm onSubmit={receiveValuesFromArticleForm}/>}
       <div className={classes.articleContainer}>
           {articles.map((article) => (
               <Article key={article.id}
@@ -48,6 +59,7 @@ export default function Articles() {
                        title={article.title}
                        description={article.description}
                        onDelete={deleteArticleById}
+                       onEdit={handleEditArticle}
               />
           ))}
       </div>

@@ -1,9 +1,9 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import classes from "./ArticleForm.module.css";
 
-export default function ArticleForm({ onSubmit }) {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+export default function ArticleForm({ titleValue = "", descriptionValue = "", onSubmit }) {
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -23,6 +23,11 @@ export default function ArticleForm({ onSubmit }) {
   const handleDescriptionChange = (event) => {
     setDescription(event.target.value);
   };
+
+  useEffect(() => {
+    setTitle(titleValue)
+    setDescription(descriptionValue)
+  }, [titleValue, descriptionValue]);
 
   
   return (
