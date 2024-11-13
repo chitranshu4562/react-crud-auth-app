@@ -1,3 +1,4 @@
+import classes from "./Articles.module.css";
 import { useState } from "react";
 import Article from "./article/Article";
 import ArticleForm from "./article-form/ArticleForm";
@@ -30,14 +31,26 @@ export default function Articles() {
         ]
     })
   }
-  ``
+
+  const deleteArticleById = (articleId) => {
+      setArticles((prevState) => {
+          return prevState.filter((article) => article.id !== articleId)
+      })
+  }
+
   return (
     <>
       <ArticleForm onSubmit={receiveValuesFromArticleForm}/>
-      <h1>Articles Components</h1>
-      {articles.map((article) => (
-        <Article key={article.id} title={article.title} description={article.description} />
-      ))}
+      <div className={classes.articleContainer}>
+          {articles.map((article) => (
+              <Article key={article.id}
+                       articleId={article.id}
+                       title={article.title}
+                       description={article.description}
+                       onDelete={deleteArticleById}
+              />
+          ))}
+      </div>
     </>
   );
 }
